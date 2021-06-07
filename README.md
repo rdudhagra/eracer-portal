@@ -1,3 +1,9 @@
+# Eracer Portal
+
+A web view for ERacer, give navigation via waypoints through map-based interface. Connects to vehicle using ROS Websocket bridge.
+
+---
+
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
 

@@ -2,6 +2,8 @@
 
 A web view for ERacer, give navigation via waypoints through map-based interface. Connects to vehicle using ROS Websocket bridge.
 
+Designed by Ravi Dudhagra ([@rdudhagra](https://github.com/rdudhagra))
+
 ---
 
 This project was bootstrapped with

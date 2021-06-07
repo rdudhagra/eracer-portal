@@ -1,6 +1,5 @@
 import * as React from "react";
-import { ChakraProvider, Box, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { ColorModeSwitcher } from "./components/util/ColorModeSwitcher";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 import theme from "./theme";
 import { MapView } from "./components/MapView/MapView";
 import { TopBar } from "./components/util/TopBar";

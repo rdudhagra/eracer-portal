@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import MapGl, { GeolocateControl } from "react-map-gl";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useColorModeValue } from "@chakra-ui/color-mode";

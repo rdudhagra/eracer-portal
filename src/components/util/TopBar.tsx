@@ -5,8 +5,6 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  InputLeftElement,
-  InputRightAddon,
   InputRightElement,
   Spacer,
   Text,
@@ -47,7 +45,7 @@ export const TopBar = () => {
         />
         <Input
           placeholder="Websocket Address"
-          _placeholder={{color: outlineColorHover}}
+          _placeholder={{ color: outlineColorHover }}
           color={textColor}
           borderColor={outlineColor}
           _hover={{ borderColor: outlineColorHover }}

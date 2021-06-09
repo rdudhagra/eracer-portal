@@ -3,10 +3,17 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 import React, { useRef, useState } from "react";
 import MapGl, { GeolocateControl } from "react-map-gl";
+
+import mapboxgl from "mapbox-gl";
+
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 
 import "./mapview.scss";
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 export const MapView = () => {
   const colorMode = useColorModeValue("light", "dark");

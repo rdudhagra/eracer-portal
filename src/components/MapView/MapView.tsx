@@ -117,13 +117,20 @@ export const MapView = (props: {
         <Markers
           waypoints={props.waypoints}
           setWaypoints={props.setWaypoints}
+          setPolyline={setPolyline}
+          makeDrivePathLayer={makeDrivePathLayer}
         />
       </DeckGL>
     </Box>
   );
 };
 
-const Markers = (props: { waypoints: Waypoint[]; setWaypoints: Function }) => {
+const Markers = (props: {
+  waypoints: Waypoint[];
+  setWaypoints: Function;
+  setPolyline: Function;
+  makeDrivePathLayer: Function;
+}) => {
   const markers = useMemo(
     () =>
       props.waypoints.map((waypoint) => (
@@ -133,12 +140,23 @@ const Markers = (props: { waypoints: Waypoint[]; setWaypoints: Function }) => {
           latitude={waypoint.lat}
           draggable
           onDragEnd={(event) => {
-            props.setWaypoints((wps: Waypoint[]) =>
-              updateWaypoint(
+            props.setWaypoints((wps: Waypoint[]) => {
+              let newWps = updateWaypoint(
                 { ...waypoint, lat: event.lngLat[1], lon: event.lngLat[0] },
                 wps
-              )
-            );
+              );
+              let pl = new CurveInterpolator(
+                newWps.map((wp) => [wp.lon, wp.lat]),
+                {
+                  tension: POLYLINE_SMOOTHING_FACTOR,
+                }
+              ).getPoints(POLYLINE_NUM_SEGMENTS);
+              props.setPolyline({
+                points: pl,
+                path: props.makeDrivePathLayer(pl),
+              });
+              return newWps;
+            });
           }}
         >
           <WaypointMarker

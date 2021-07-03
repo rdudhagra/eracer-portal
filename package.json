@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^1.0.0",
+    "@craco/craco": "^6.1.2",
+    "@danmarshall/deckgl-typings": "^4.9.2",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@testing-library/jest-dom": "^5.9.0",
@@ -13,21 +15,28 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "array-move": "^3.0.1",
+    "curve-interpolator": "^2.0.8",
+    "deck.gl": "^8.4.17",
     "framer-motion": "^4.0.0",
+    "global": "^4.4.0",
+    "jquery": "^3.6.0",
     "node-sass": "^5.0.0",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-icons": "^3.0.0",
     "react-map-gl": "^6.1.16",
     "react-scripts": "4.0.3",
-    "typescript": "^3.9.5",
+    "typescript": "^4.3.4",
+    "uuid": "^8.3.2",
     "web-vitals": "^0.2.2",
     "worker-loader": "^3.0.8"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "HTTPS=true craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,6 +55,9 @@
     ]
   },
   "devDependencies": {
-    "@types/mapbox-gl": "^2.3.0"
+    "@types/jquery": "^3.5.5",
+    "@types/mapbox-gl": "^2.3.0",
+    "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/uuid": "^8.3.0"
   }
 }

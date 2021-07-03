@@ -40,7 +40,7 @@ export const TopBar = () => {
           fontSize="1em"
           color={textColor}
           bg={buttonColor}
-          children={[<FaGlobe />, <Text ms={3}>ws://</Text>]}
+          children={[<FaGlobe key="eracer-globeicon"/>, <Text ms={3} key="earcer-wsheader">ws://</Text>]}
           borderColor={outlineColor}
         />
         <Input

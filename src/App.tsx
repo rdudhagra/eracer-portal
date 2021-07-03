@@ -1,15 +1,18 @@
-import * as React from "react";
-import { ChakraProvider, Flex } from "@chakra-ui/react";
-import theme from "./theme";
+import { useState } from "react";
+import { Flex } from "@chakra-ui/react";
 import { MapView } from "./components/MapView/MapView";
 import { TopBar } from "./components/util/TopBar";
 import { ConfigPanel } from "./components/ConfigPanel/ConfigPanel";
 
+import { Waypoint } from "./models/Waypoint";
+
 export const App = () => {
+  const [waypoints, setWaypoints] = useState<Waypoint[]>([]);
+
   return (
-    <ChakraProvider theme={theme}>
+    <>
       <Flex minH="100vh" maxH="100vh">
-        <MapView />
+        <MapView waypoints={waypoints} setWaypoints={setWaypoints} />
       </Flex>
       <Flex
         position="absolute"
@@ -25,8 +28,8 @@ export const App = () => {
         pointerEvents="none"
       >
         <TopBar />
-        <ConfigPanel />
+        <ConfigPanel waypoints={waypoints} setWaypoints={setWaypoints} />
       </Flex>
-    </ChakraProvider>
+    </>
   );
 };

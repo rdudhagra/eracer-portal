@@ -13,8 +13,12 @@ import {
 import * as React from "react";
 import { FaGlobe } from "react-icons/fa";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import { MapSatelliteSwitcher } from "./MapSatelliteSwitcher";
 
-export const TopBar = () => {
+export const TopBar = (props: {
+  satellite: boolean;
+  setSatellite: Function;
+}) => {
   const bgColor = useColorModeValue("gray.800", "white");
   const buttonColor = useColorModeValue("gray.700", "gray.100");
   const textColor = useColorModeValue("gray.100", "gray.800");
@@ -40,7 +44,12 @@ export const TopBar = () => {
           fontSize="1em"
           color={textColor}
           bg={buttonColor}
-          children={[<FaGlobe key="eracer-globeicon"/>, <Text ms={3} key="earcer-wsheader">ws://</Text>]}
+          children={[
+            <FaGlobe key="eracer-globeicon" />,
+            <Text ms={3} key="earcer-wsheader">
+              ws://
+            </Text>,
+          ]}
           borderColor={outlineColor}
         />
         <Input
@@ -61,6 +70,11 @@ export const TopBar = () => {
         />
       </InputGroup>
       <ColorModeSwitcher ms={4} />
+      <MapSatelliteSwitcher
+        ms={4}
+        satellite={props.satellite}
+        setSatellite={props.setSatellite}
+      />
     </Flex>
   );
 };

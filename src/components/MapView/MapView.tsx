@@ -35,23 +35,24 @@ export const POLYLINE_SMOOTHING_FACTOR = 0.9;
 export const POLYLINE_NUM_SEGMENTS = 1000;
 
 export const makeDrivePathLayer = (pl: any) =>
-new PathLayer({
-  id: "drive-path-layer",
-  data: [
-    {
-      path: pl,
-      name: "",
-    },
-  ],
-  rounded: true,
-  pickable: false,
-  widthScale: 2,
-  widthMinPixels: 2,
-  widthMaxPixels: 6,
-  getColor: [11, 197, 234],
-});
+  new PathLayer({
+    id: "drive-path-layer",
+    data: [
+      {
+        path: pl,
+        name: "",
+      },
+    ],
+    rounded: true,
+    pickable: false,
+    widthScale: 2,
+    widthMinPixels: 2,
+    widthMaxPixels: 6,
+    getColor: [11, 197, 234],
+  });
 
 export const MapView = (props: {
+  satellite: boolean;
   waypoints: Waypoint[];
   setWaypoints: Function;
   polyline: { points: any[]; path: any };
@@ -102,23 +103,25 @@ export const MapView = (props: {
         ContextProvider={_MapContext.Provider}
       >
         <StaticMap
-          mapStyle={`mapbox://styles/mapbox/${colorMode}-v10`}
-          // mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
+          mapStyle={
+            props.satellite
+              ? "mapbox://styles/mapbox/satellite-streets-v11"
+              : `mapbox://styles/mapbox/${colorMode}-v10`
+          }
           width={width}
           height={height}
           attributionControl={false}
-        >
-          <GeolocateControl
-            style={{ padding: 10, top: 70 }}
-            fitBoundsOptions={{ maxZoom: 18 }}
-            auto
-          />
-        </StaticMap>
+        />
         <Markers
           waypoints={props.waypoints}
           setWaypoints={props.setWaypoints}
           setPolyline={props.setPolyline}
           makeDrivePathLayer={makeDrivePathLayer}
+        />
+        <GeolocateControl
+          style={{ padding: 10, top: 70 }}
+          fitBoundsOptions={{ maxZoom: 18 }}
+          auto
         />
       </DeckGL>
     </Box>

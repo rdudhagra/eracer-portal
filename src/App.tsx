@@ -9,11 +9,18 @@ import { Waypoint } from "./models/Waypoint";
 export const App = () => {
   const [waypoints, setWaypoints] = useState<Waypoint[]>([]);
   const [polyline, setPolyline] = useState({} as { points: any[]; path: any });
+  const [satellite, setSatellite] = useState(false);
 
   return (
     <>
       <Flex minH="100vh" maxH="100vh">
-        <MapView waypoints={waypoints} setWaypoints={setWaypoints} polyline={polyline} setPolyline={setPolyline} />
+        <MapView
+          satellite={satellite}
+          waypoints={waypoints}
+          setWaypoints={setWaypoints}
+          polyline={polyline}
+          setPolyline={setPolyline}
+        />
       </Flex>
       <Flex
         position="absolute"
@@ -28,8 +35,13 @@ export const App = () => {
         fontSize="xl"
         pointerEvents="none"
       >
-        <TopBar />
-        <ConfigPanel waypoints={waypoints} setWaypoints={setWaypoints} polyline={polyline} setPolyline={setPolyline} />
+        <TopBar satellite={satellite} setSatellite={setSatellite} />
+        <ConfigPanel
+          waypoints={waypoints}
+          setWaypoints={setWaypoints}
+          polyline={polyline}
+          setPolyline={setPolyline}
+        />
       </Flex>
     </>
   );

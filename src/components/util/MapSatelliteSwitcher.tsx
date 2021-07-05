@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useColorMode, useColorModeValue, IconButton } from "@chakra-ui/react";
+import { useColorModeValue, IconButton } from "@chakra-ui/react";
 import { MdMap, MdPublic } from "react-icons/md";
 
 export const MapSatelliteSwitcher: React.FC<any> = (props) => {

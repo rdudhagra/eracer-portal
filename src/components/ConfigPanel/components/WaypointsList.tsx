@@ -16,10 +16,18 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { useCallback } from "react";
+import { CurveInterpolator } from "curve-interpolator";
+import {
+  makeDrivePathLayer,
+  POLYLINE_NUM_SEGMENTS,
+  POLYLINE_SMOOTHING_FACTOR,
+} from "../../MapView/MapView";
 
 export const WaypointsList = (props: {
   waypoints: Waypoint[];
   setWaypoints: Function;
+  polyline: { points: any[]; path: any };
+  setPolyline: Function;
 }) => {
   const textBrightness = useColorModeValue(".700", ".400");
 
@@ -27,10 +35,26 @@ export const WaypointsList = (props: {
   const onDragEnd = useCallback(
     (result: DropResult) => {
       if (result.destination?.index !== undefined)
-        setWaypoints((wps: Waypoint[]) =>
-          moveWaypoint(result.source.index, result.destination?.index!, wps)
-        );
+        setWaypoints((wps: Waypoint[]) => {
+          let newWps = moveWaypoint(
+            result.source.index,
+            result.destination?.index!,
+            wps
+          );
+          let pl = new CurveInterpolator(
+            newWps.map((wp) => [wp.lon, wp.lat]),
+            {
+              tension: POLYLINE_SMOOTHING_FACTOR,
+            }
+          ).getPoints(POLYLINE_NUM_SEGMENTS);
+          props.setPolyline({
+            points: pl,
+            path: makeDrivePathLayer(pl),
+          });
+          return newWps;
+        });
     },
+    // eslint-disable-next-line
     [setWaypoints]
   );
 
@@ -76,9 +100,22 @@ export const WaypointsList = (props: {
                             size={20}
                             cursor="pointer"
                             onClick={() =>
-                              props.setWaypoints((wps: Waypoint[]) =>
-                                removeWaypoint(waypoint, wps)
-                              )
+                              props.setWaypoints((wps: Waypoint[]) => {
+                                let newWps = removeWaypoint(waypoint, wps);
+                                let pl = newWps.length
+                                  ? new CurveInterpolator(
+                                      newWps.map((wp) => [wp.lon, wp.lat]),
+                                      {
+                                        tension: POLYLINE_SMOOTHING_FACTOR,
+                                      }
+                                    ).getPoints(POLYLINE_NUM_SEGMENTS)
+                                  : [];
+                                props.setPolyline({
+                                  points: pl,
+                                  path: makeDrivePathLayer(pl),
+                                });
+                                return newWps;
+                              })
                             }
                           />
                         </Box>

@@ -6,6 +6,8 @@ import { WaypointsList } from "./components/WaypointsList";
 export const ConfigPanel = (props: {
   waypoints: Waypoint[];
   setWaypoints: Function;
+  polyline: { points: any[]; path: any };
+  setPolyline: Function;
 }) => {
   const bgColor = useColorModeValue("gray.300", "gray.700");
   const cardColor = useColorModeValue("gray.400", "gray.600");
@@ -41,6 +43,8 @@ export const ConfigPanel = (props: {
           <WaypointsList
             waypoints={props.waypoints}
             setWaypoints={props.setWaypoints}
+            polyline={props.polyline}
+            setPolyline={props.setPolyline}
           />
         </Box>
       </Flex>

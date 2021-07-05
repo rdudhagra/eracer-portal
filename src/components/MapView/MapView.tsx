@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { GeolocateControl, Marker, StaticMap, _MapContext } from "react-map-gl";
 
 import DeckGL from "@deck.gl/react";
@@ -31,12 +31,31 @@ mapboxgl.workerClass =
   require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 /* eslint-enable import/no-webpack-loader-syntax, import/no-unresolved */
 
-const POLYLINE_SMOOTHING_FACTOR = 0.5;
-const POLYLINE_NUM_SEGMENTS = 1000;
+export const POLYLINE_SMOOTHING_FACTOR = 0.9;
+export const POLYLINE_NUM_SEGMENTS = 1000;
+
+export const makeDrivePathLayer = (pl: any) =>
+new PathLayer({
+  id: "drive-path-layer",
+  data: [
+    {
+      path: pl,
+      name: "",
+    },
+  ],
+  rounded: true,
+  pickable: false,
+  widthScale: 2,
+  widthMinPixels: 2,
+  widthMaxPixels: 6,
+  getColor: [11, 197, 234],
+});
 
 export const MapView = (props: {
   waypoints: Waypoint[];
   setWaypoints: Function;
+  polyline: { points: any[]; path: any };
+  setPolyline: Function;
 }) => {
   const colorMode = useColorModeValue("light", "dark");
 
@@ -51,25 +70,6 @@ export const MapView = (props: {
     pitch: 0,
   };
 
-  const [polyline, setPolyline] = useState({} as { points: any[]; path: any });
-
-  const makeDrivePathLayer = (pl: any) =>
-    new PathLayer({
-      id: "drive-path-layer",
-      data: [
-        {
-          path: pl,
-          name: "",
-        },
-      ],
-      rounded: true,
-      pickable: false,
-      widthScale: 2,
-      widthMinPixels: 2,
-      widthMaxPixels: 6,
-      getColor: [11, 197, 234],
-    });
-
   const onClick = useCallback((event) => {
     props.setWaypoints((wps: Waypoint[]) => {
       let newWps = addWaypoint(
@@ -82,7 +82,7 @@ export const MapView = (props: {
           tension: POLYLINE_SMOOTHING_FACTOR,
         }
       ).getPoints(POLYLINE_NUM_SEGMENTS);
-      setPolyline({
+      props.setPolyline({
         points: pl,
         path: makeDrivePathLayer(pl),
       });
@@ -97,7 +97,7 @@ export const MapView = (props: {
         initialViewState={viewport}
         controller={{ touchRotate: true, touchZoom: true }}
         onClick={onClick}
-        layers={[polyline.path]}
+        layers={[props.polyline.path]}
         // @ts-ignore
         ContextProvider={_MapContext.Provider}
       >
@@ -117,7 +117,7 @@ export const MapView = (props: {
         <Markers
           waypoints={props.waypoints}
           setWaypoints={props.setWaypoints}
-          setPolyline={setPolyline}
+          setPolyline={props.setPolyline}
           makeDrivePathLayer={makeDrivePathLayer}
         />
       </DeckGL>

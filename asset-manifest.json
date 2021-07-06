@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://rdudhagra.github.io/eracer-portal/static/css/main.ec1bb7f1.chunk.css",
-    "main.js": "https://rdudhagra.github.io/eracer-portal/static/js/main.364b22c9.chunk.js",
-    "main.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/main.364b22c9.chunk.js.map",
+    "main.js": "https://rdudhagra.github.io/eracer-portal/static/js/main.e46357b9.chunk.js",
+    "main.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/main.e46357b9.chunk.js.map",
     "runtime-main.js": "https://rdudhagra.github.io/eracer-portal/static/js/runtime-main.4d3eb2d2.js",
     "runtime-main.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/runtime-main.4d3eb2d2.js.map",
     "static/css/2.9bf3e30e.chunk.css": "https://rdudhagra.github.io/eracer-portal/static/css/2.9bf3e30e.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.9bf3e30e.chunk.css",
     "static/js/2.838f4dca.chunk.js",
     "static/css/main.ec1bb7f1.chunk.css",
-    "static/js/main.364b22c9.chunk.js"
+    "static/js/main.e46357b9.chunk.js"
   ]
 }

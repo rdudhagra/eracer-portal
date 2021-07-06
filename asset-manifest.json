@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "https://rdudhagra.github.io/eracer-portal/static/css/main.ec1bb7f1.chunk.css",
-    "main.js": "https://rdudhagra.github.io/eracer-portal/static/js/main.c93bd85b.chunk.js",
-    "main.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/main.c93bd85b.chunk.js.map",
+    "main.js": "https://rdudhagra.github.io/eracer-portal/static/js/main.364b22c9.chunk.js",
+    "main.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/main.364b22c9.chunk.js.map",
     "runtime-main.js": "https://rdudhagra.github.io/eracer-portal/static/js/runtime-main.4d3eb2d2.js",
     "runtime-main.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/runtime-main.4d3eb2d2.js.map",
     "static/css/2.9bf3e30e.chunk.css": "https://rdudhagra.github.io/eracer-portal/static/css/2.9bf3e30e.chunk.css",
-    "static/js/2.2e3ca2c7.chunk.js": "https://rdudhagra.github.io/eracer-portal/static/js/2.2e3ca2c7.chunk.js",
-    "static/js/2.2e3ca2c7.chunk.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/2.2e3ca2c7.chunk.js.map",
+    "static/js/2.838f4dca.chunk.js": "https://rdudhagra.github.io/eracer-portal/static/js/2.838f4dca.chunk.js",
+    "static/js/2.838f4dca.chunk.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/2.838f4dca.chunk.js.map",
     "index.html": "https://rdudhagra.github.io/eracer-portal/index.html",
     "static/css/2.9bf3e30e.chunk.css.map": "https://rdudhagra.github.io/eracer-portal/static/css/2.9bf3e30e.chunk.css.map",
     "static/css/main.ec1bb7f1.chunk.css.map": "https://rdudhagra.github.io/eracer-portal/static/css/main.ec1bb7f1.chunk.css.map",
-    "static/js/2.2e3ca2c7.chunk.js.LICENSE.txt": "https://rdudhagra.github.io/eracer-portal/static/js/2.2e3ca2c7.chunk.js.LICENSE.txt",
+    "static/js/2.838f4dca.chunk.js.LICENSE.txt": "https://rdudhagra.github.io/eracer-portal/static/js/2.838f4dca.chunk.js.LICENSE.txt",
     "static/js/mapbox-gl-csp-worker.e2e9bf24.worker.js": "https://rdudhagra.github.io/eracer-portal/static/js/mapbox-gl-csp-worker.e2e9bf24.worker.js",
     "static/js/mapbox-gl-csp-worker.e2e9bf24.worker.js.map": "https://rdudhagra.github.io/eracer-portal/static/js/mapbox-gl-csp-worker.e2e9bf24.worker.js.map"
   },
   "entrypoints": [
     "static/js/runtime-main.4d3eb2d2.js",
     "static/css/2.9bf3e30e.chunk.css",
-    "static/js/2.2e3ca2c7.chunk.js",
+    "static/js/2.838f4dca.chunk.js",
     "static/css/main.ec1bb7f1.chunk.css",
-    "static/js/main.c93bd85b.chunk.js"
+    "static/js/main.364b22c9.chunk.js"
   ]
 }

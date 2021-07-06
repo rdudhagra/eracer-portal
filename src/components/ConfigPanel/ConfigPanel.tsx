@@ -23,14 +23,24 @@ export const ConfigPanel = (props: {
   const cardColor = useColorModeValue("gray.400", "gray.600");
   const headerBrightness = useColorModeValue(".300", ".400");
 
-  const loadJsonInput = useRef(null);
+  const setWaypoints = props.setWaypoints;
+  const setPolyline = props.setPolyline;
+
+  const clearWaypoints = useCallback(() => {
+    setWaypoints(() => {
+      setPolyline({
+        points: [],
+        path: makeDrivePathLayer([]),
+      });
+      return [];
+    });
+  }, [setWaypoints, setPolyline]);
 
   const saveWaypoints = useCallback(() => {
     fileDownload(JSON.stringify(props.waypoints, null, 2), "waypoints.json");
   }, [props.waypoints]);
 
-  const setWaypoints = props.setWaypoints;
-  const setPolyline = props.setPolyline;
+  const loadJsonInput = useRef(null);
   const loadWaypoints = useCallback(
     (event) => {
       let file = event.target.files[0];
@@ -40,16 +50,18 @@ export const ConfigPanel = (props: {
           setWaypoints(() => {
             // @ts-ignore TS2531
             let newWps = JSON.parse(event.target.result);
-            let pl = new CurveInterpolator(
-              newWps.map((wp: { lon: any; lat: any }) => [wp.lon, wp.lat]),
-              {
-                tension: POLYLINE_SMOOTHING_FACTOR,
-              }
-            ).getPoints(POLYLINE_NUM_SEGMENTS);
-            setPolyline({
-              points: pl,
-              path: makeDrivePathLayer(pl),
-            });
+            if (newWps.length) {
+              let pl = new CurveInterpolator(
+                newWps.map((wp: { lon: any; lat: any }) => [wp.lon, wp.lat]),
+                {
+                  tension: POLYLINE_SMOOTHING_FACTOR,
+                }
+              ).getPoints(POLYLINE_NUM_SEGMENTS);
+              setPolyline({
+                points: pl,
+                path: makeDrivePathLayer(pl),
+              });
+            }
             return newWps;
           });
         };
@@ -92,6 +104,7 @@ export const ConfigPanel = (props: {
             variant="solid"
             colorScheme="blackAlpha"
           >
+            <Button onClick={clearWaypoints}>Clear</Button>
             <input
               ref={loadJsonInput}
               type="file"

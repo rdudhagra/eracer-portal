@@ -1,7 +1,17 @@
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Heading } from "@chakra-ui/layout";
+import { ButtonGroup, Button } from "@chakra-ui/react";
+import { useRef } from "react";
+import { useCallback } from "react";
 import { Waypoint } from "../../models/Waypoint";
 import { WaypointsList } from "./components/WaypointsList";
+import { CurveInterpolator } from "curve-interpolator";
+import {
+  makeDrivePathLayer,
+  POLYLINE_NUM_SEGMENTS,
+  POLYLINE_SMOOTHING_FACTOR,
+} from "../MapView/MapView";
+var fileDownload = require("js-file-download");
 
 export const ConfigPanel = (props: {
   waypoints: Waypoint[];
@@ -12,6 +22,42 @@ export const ConfigPanel = (props: {
   const bgColor = useColorModeValue("gray.300", "gray.700");
   const cardColor = useColorModeValue("gray.400", "gray.600");
   const headerBrightness = useColorModeValue(".300", ".400");
+
+  const loadJsonInput = useRef(null);
+
+  const saveWaypoints = useCallback(() => {
+    fileDownload(JSON.stringify(props.waypoints, null, 2), "waypoints.json");
+  }, [props.waypoints]);
+
+  const setWaypoints = props.setWaypoints;
+  const setPolyline = props.setPolyline;
+  const loadWaypoints = useCallback(
+    (event) => {
+      let file = event.target.files[0];
+      if (file) {
+        let reader = new FileReader();
+        reader.onload = function (event) {
+          setWaypoints(() => {
+            // @ts-ignore TS2531
+            let newWps = JSON.parse(event.target.result);
+            let pl = new CurveInterpolator(
+              newWps.map((wp: { lon: any; lat: any }) => [wp.lon, wp.lat]),
+              {
+                tension: POLYLINE_SMOOTHING_FACTOR,
+              }
+            ).getPoints(POLYLINE_NUM_SEGMENTS);
+            setPolyline({
+              points: pl,
+              path: makeDrivePathLayer(pl),
+            });
+            return newWps;
+          });
+        };
+        reader.readAsText(file);
+      }
+    },
+    [setWaypoints, setPolyline]
+  );
 
   return (
     <Flex
@@ -37,7 +83,31 @@ export const ConfigPanel = (props: {
         overflow="hidden"
       >
         <Flex bg={`red${headerBrightness}`} w="100%" py={2} px={4}>
-          <Heading fontSize="2xl">Waypoints</Heading>
+          <Heading fontSize="2xl" me="auto">
+            Waypoints
+          </Heading>
+          <ButtonGroup
+            size="sm"
+            isAttached
+            variant="solid"
+            colorScheme="blackAlpha"
+          >
+            <input
+              ref={loadJsonInput}
+              type="file"
+              onChange={loadWaypoints}
+              style={{ display: "none" }}
+            />
+            <Button
+              onClick={() =>
+                // @ts-ignore: Object is possibly 'null'.
+                loadJsonInput.current.click()
+              }
+            >
+              Load
+            </Button>
+            <Button onClick={saveWaypoints}>Save</Button>
+          </ButtonGroup>
         </Flex>
         <Box flex={1} style={{ overflow: "auto" }}>
           <WaypointsList

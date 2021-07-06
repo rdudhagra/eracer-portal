@@ -71,7 +71,7 @@ export const TopBar = (props: {
       </InputGroup>
       <ColorModeSwitcher ms={4} />
       <MapSatelliteSwitcher
-        ms={4}
+        iconProps={{ ms: 4 }}
         satellite={props.satellite}
         setSatellite={props.setSatellite}
       />

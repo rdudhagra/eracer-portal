@@ -128,7 +128,7 @@ export const WaypointsList = (props: {
                           <WaypointMarker
                             waypoint={waypoint}
                             setWaypoints={props.setWaypoints}
-                            highlight={ind == props.insertIndex - 1}
+                            highlight={ind === props.insertIndex - 1}
                           />
                         </Box>
                         <Box px={2} fontSize="xs" w="100%">

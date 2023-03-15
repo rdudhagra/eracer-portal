@@ -178,7 +178,7 @@ const Markers = (props: {
             waypoint={waypoint}
             setWaypoints={props.setWaypoints}
             onMap
-            highlight={index == props.insertIndex - 1}
+            highlight={index === props.insertIndex - 1}
           />
         </Marker>
       )),

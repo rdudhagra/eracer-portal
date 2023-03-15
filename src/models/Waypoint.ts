@@ -5,7 +5,6 @@ export type Waypoint = {
   key: string;
   lat: number;
   lon: number;
-  fullStop: boolean;
   active: boolean;
 };
 
@@ -21,6 +20,16 @@ export function updateWaypoint(newWaypoint: Waypoint, waypoints: Waypoint[]) {
 
 export function addWaypoint(newWaypoint: Waypoint, waypoints: Waypoint[]) {
   return [...waypoints, newWaypoint];
+}
+
+export function insertWaypoint(
+  newWaypoint: Waypoint,
+  waypointIndex: number,
+  waypoints: Waypoint[]
+) {
+  let newWaypoints = Array.from(waypoints); // make copy
+  newWaypoints.splice(waypointIndex, 0, newWaypoint);
+  return newWaypoints;
 }
 
 export function removeWaypoint(waypoint: Waypoint, waypoints: Waypoint[]) {
@@ -45,7 +54,6 @@ export function newWaypoint(lon: number, lat: number) {
     key: uuid(),
     lat: lat,
     lon: lon,
-    fullStop: true,
     active: false,
   } as Waypoint;
 }

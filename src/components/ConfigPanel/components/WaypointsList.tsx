@@ -28,6 +28,8 @@ export const WaypointsList = (props: {
   setWaypoints: Function;
   polyline: { points: any[]; path: any };
   setPolyline: Function;
+  insertIndex: number;
+  setInsertIndex: Function;
 }) => {
   const textBrightness = useColorModeValue(".700", ".400");
 
@@ -93,6 +95,9 @@ export const WaypointsList = (props: {
                             updateWaypoint({ ...waypoint, active: false }, wps)
                           );
                         }}
+                        onClick={() => {
+                          props.setInsertIndex(ind + 1);
+                        }}
                         pointerEvents="fill"
                       >
                         <Box px={3}>
@@ -104,11 +109,11 @@ export const WaypointsList = (props: {
                                 let newWps = removeWaypoint(waypoint, wps);
                                 let pl = newWps.length
                                   ? new CurveInterpolator(
-                                      newWps.map((wp) => [wp.lon, wp.lat]),
-                                      {
-                                        tension: POLYLINE_SMOOTHING_FACTOR,
-                                      }
-                                    ).getPoints(POLYLINE_NUM_SEGMENTS)
+                                    newWps.map((wp) => [wp.lon, wp.lat]),
+                                    {
+                                      tension: POLYLINE_SMOOTHING_FACTOR,
+                                    }
+                                  ).getPoints(POLYLINE_NUM_SEGMENTS)
                                   : [];
                                 props.setPolyline({
                                   points: pl,
@@ -123,6 +128,7 @@ export const WaypointsList = (props: {
                           <WaypointMarker
                             waypoint={waypoint}
                             setWaypoints={props.setWaypoints}
+                            highlight={ind == props.insertIndex - 1}
                           />
                         </Box>
                         <Box px={2} fontSize="xs" w="100%">
@@ -134,23 +140,13 @@ export const WaypointsList = (props: {
                           px={4}
                           textAlign="right"
                           fontSize="md"
-                          onClick={() => {
-                            props.setWaypoints((wps: Waypoint[]) =>
-                              updateWaypoint(
-                                { ...waypoint, fullStop: !waypoint.fullStop },
-                                wps
-                              )
-                            );
-                          }}
                         >
                           <Text
                             whiteSpace="nowrap"
-                            textColor={`${
-                              waypoint.fullStop ? "red" : "teal"
-                            }${textBrightness}`}
+                            textColor={`${"red"
+                              }${textBrightness}`}
                             cursor="pointer"
                           >
-                            {waypoint.fullStop ? "Full Stop" : "Coast"}
                           </Text>
                         </Box>
                       </Flex>

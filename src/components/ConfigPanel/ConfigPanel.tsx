@@ -18,6 +18,8 @@ export const ConfigPanel = (props: {
   setWaypoints: Function;
   polyline: { points: any[]; path: any };
   setPolyline: Function;
+  insertIndex: number;
+  setInsertIndex: Function;
 }) => {
   const bgColor = useColorModeValue("gray.300", "gray.700");
   const cardColor = useColorModeValue("gray.400", "gray.600");
@@ -61,6 +63,7 @@ export const ConfigPanel = (props: {
                 points: pl,
                 path: makeDrivePathLayer(pl),
               });
+              props.setInsertIndex(newWps.length);
             }
             return newWps;
           });
@@ -128,6 +131,8 @@ export const ConfigPanel = (props: {
             setWaypoints={props.setWaypoints}
             polyline={props.polyline}
             setPolyline={props.setPolyline}
+            insertIndex={props.insertIndex}
+            setInsertIndex={props.setInsertIndex}
           />
         </Box>
       </Flex>

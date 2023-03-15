@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { GeolocateControl, Marker, StaticMap, _MapContext } from "react-map-gl";
 
 import DeckGL from "@deck.gl/react";
@@ -14,7 +14,7 @@ import { useColorModeValue } from "@chakra-ui/color-mode";
 
 import "./mapview.scss";
 import {
-  addWaypoint,
+  insertWaypoint,
   newWaypoint,
   updateWaypoint,
   Waypoint,
@@ -57,6 +57,8 @@ export const MapView = (props: {
   setWaypoints: Function;
   polyline: { points: any[]; path: any };
   setPolyline: Function;
+  insertIndex: number;
+  setInsertIndex: Function;
 }) => {
   const colorMode = useColorModeValue("light", "dark");
 
@@ -64,19 +66,22 @@ export const MapView = (props: {
   const { width, height } = useWindowSize();
 
   const viewport = {
-    latitude: 0,
-    longitude: 0,
+    latitude: 40.440349,
+    longitude: -79.942433,
     zoom: 18,
     bearing: 0,
     pitch: 0,
+    maxZoom: 24,
   };
 
   const onClick = useCallback((event) => {
     props.setWaypoints((wps: Waypoint[]) => {
-      let newWps = addWaypoint(
+      let newWps = insertWaypoint(
         newWaypoint(event.coordinate[0], event.coordinate[1]),
+        props.insertIndex,
         wps
       );
+      props.setInsertIndex(props.insertIndex + 1);
       let pl = new CurveInterpolator(
         newWps.map((wp) => [wp.lon, wp.lat]),
         {
@@ -90,7 +95,7 @@ export const MapView = (props: {
       return newWps;
     });
     // eslint-disable-next-line
-  }, []);
+  }, [props.insertIndex]);
 
   return (
     <Box flex={1} display="block" ref={mapContainer}>
@@ -105,8 +110,8 @@ export const MapView = (props: {
         <StaticMap
           mapStyle={
             props.satellite
-              ? "mapbox://styles/mapbox/satellite-streets-v11"
-              : `mapbox://styles/mapbox/${colorMode}-v10`
+              ? "mapbox://styles/mapbox/satellite-streets-v12"
+              : `mapbox://styles/mapbox/${colorMode}-v11`
           }
           width={width}
           height={height}
@@ -117,6 +122,8 @@ export const MapView = (props: {
           setWaypoints={props.setWaypoints}
           setPolyline={props.setPolyline}
           makeDrivePathLayer={makeDrivePathLayer}
+          insertIndex={props.insertIndex}
+          setInsertIndex={props.setInsertIndex}
         />
         <GeolocateControl
           style={{ padding: 10, top: 70 }}
@@ -133,15 +140,20 @@ const Markers = (props: {
   setWaypoints: Function;
   setPolyline: Function;
   makeDrivePathLayer: Function;
+  insertIndex: number;
+  setInsertIndex: Function;
 }) => {
   const markers = useMemo(
     () =>
-      props.waypoints.map((waypoint) => (
+      props.waypoints.map((waypoint, index) => (
         <Marker
           key={waypoint.key}
           longitude={waypoint.lon}
           latitude={waypoint.lat}
           draggable
+          onClick={() => {
+            props.setInsertIndex(index + 1);
+          }}
           onDragEnd={(event) => {
             props.setWaypoints((wps: Waypoint[]) => {
               let newWps = updateWaypoint(
@@ -166,6 +178,7 @@ const Markers = (props: {
             waypoint={waypoint}
             setWaypoints={props.setWaypoints}
             onMap
+            highlight={index == props.insertIndex - 1}
           />
         </Marker>
       )),

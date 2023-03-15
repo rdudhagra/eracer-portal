@@ -6,6 +6,7 @@ export const WaypointMarker = (props: {
   waypoint: Waypoint;
   setWaypoints: Function;
   onMap: boolean;
+  highlight: boolean;
 }) => {
   const iconColor = useColorModeValue("black", "white");
 
@@ -26,16 +27,13 @@ export const WaypointMarker = (props: {
       size={props.onMap ? 35 : 30}
       style={{
         translate: props.onMap ? "-50% -100%" : "",
-        color: `var(--chakra-colors-${
-          props.waypoint.active
+        color: `var(--chakra-colors-${props.waypoint.active
             ? iconColor
-            : props.waypoint.fullStop
-            ? "red-500"
-            : "teal-400"
-        })`,
+            : (props.highlight ? "yellow-400" : "red-500")
+          })`,
         zIndex: 1,
       }}
     />
   );
 };
-WaypointMarker.defaultProps = { onMap: false, active: false, fullStop: false };
+WaypointMarker.defaultProps = { onMap: false, active: false };

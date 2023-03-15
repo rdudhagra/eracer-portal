@@ -22,6 +22,8 @@ jobs:
       env:
         REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
         PUBLIC_URL: https://rdudhagra.github.io/eracer-portal/
+        NODE_OPTIONS: --openssl-legacy-provider
+
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3

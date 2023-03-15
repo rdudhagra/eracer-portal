@@ -125,11 +125,11 @@ export const MapView = (props: {
           insertIndex={props.insertIndex}
           setInsertIndex={props.setInsertIndex}
         />
-        <GeolocateControl
+        {/* <GeolocateControl
           style={{ padding: 10, top: 70 }}
           fitBoundsOptions={{ maxZoom: 18 }}
           auto
-        />
+        /> */}
       </DeckGL>
     </Box>
   );

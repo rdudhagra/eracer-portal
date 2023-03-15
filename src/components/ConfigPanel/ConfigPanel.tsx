@@ -71,7 +71,7 @@ export const ConfigPanel = (props: {
         reader.readAsText(file);
       }
     },
-    [setWaypoints, setPolyline]
+    [setWaypoints, setPolyline, props]
   );
 
   return (

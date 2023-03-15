@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { GeolocateControl, Marker, StaticMap, _MapContext } from "react-map-gl";
 
 import DeckGL from "@deck.gl/react";
